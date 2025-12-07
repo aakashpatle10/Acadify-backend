@@ -9,6 +9,21 @@ class AdminController {
         this.adminService = new AdminService();
     }
 
+    register = async (req, res, next) => {
+        try {
+            // For testing purposes - public registration
+            const admin = await this.adminService.registerAdmin(req.body);
+
+            res.status(201).json({
+                success: true,
+                message: 'Admin registered successfully',
+                data: admin
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
     login = async (req, res, next) => {
         try {
             const { email, password } = req.body;

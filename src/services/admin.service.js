@@ -10,6 +10,30 @@ class AdminService {
         this.adminRepository = new MongoAdminRepository();
     }
 
+    async registerAdmin(adminData) {
+        try {
+            // Public registration - creates a main_admin by default for testing
+            const adminDataWithRole = {
+                ...adminData,
+                role: adminData.role || 'main_admin' // Default to main_admin if not specified
+            };
+            const admin = await this.adminRepository.createAdmin(adminDataWithRole);
+
+            return {
+                id: admin._id,
+                email: admin.email,
+                firstName: admin.firstName,
+                lastName: admin.lastName,
+                role: admin.role,
+                department: admin.department
+            };
+        } catch (error) {
+            if (error instanceof AppError) throw error;
+            logger.error('Register admin error:', error);
+            throw new AppError('Failed to register admin', 500);
+        }
+    }
+
     async login(email, password) {
         try {
             const admin = await this.adminRepository.findAdminByEmail(email);

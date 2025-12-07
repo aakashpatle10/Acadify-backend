@@ -7,6 +7,7 @@ import { loginValidator, resetPasswordValidator, createStudentValidator } from '
 const router = express.Router();
 
 // Public routes
+router.post('/register', createStudentValidator, studentController.register);
 router.post('/login', loginValidator, studentController.login);
 router.post('/reset-password', resetPasswordValidator, studentController.resetPassword);
 router.post('/refresh-token', studentController.refreshToken);

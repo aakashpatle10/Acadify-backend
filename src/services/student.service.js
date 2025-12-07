@@ -10,6 +10,30 @@ class StudentService {
         this.studentRepository = new MongoStudentRepository();
     }
 
+    async registerStudent(studentData) {
+        try {
+            // Public registration - no creatorId required
+            const student = await this.studentRepository.createStudent(studentData);
+
+            return {
+                id: student._id,
+                enrollmentNumber: student.enrollmentNumber,
+                email: student.email,
+                firstName: student.firstName,
+                lastName: student.lastName,
+                department: student.department,
+                course: student.course,
+                year: student.year,
+                semester: student.semester,
+                role: 'student'
+            };
+        } catch (error) {
+            if (error instanceof AppError) throw error;
+            logger.error('Register student error:', error);
+            throw new AppError('Failed to register student', 500);
+        }
+    }
+
     async login(enrollmentNumber, password) {
         try {
             const student = await this.studentRepository.findStudentByEnrollmentNumber(enrollmentNumber);

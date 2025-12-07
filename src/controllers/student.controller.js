@@ -9,6 +9,21 @@ class StudentController {
         this.studentService = new StudentService();
     }
 
+    register = async (req, res, next) => {
+        try {
+            // For testing purposes - public registration
+            const student = await this.studentService.registerStudent(req.body);
+
+            res.status(201).json({
+                success: true,
+                message: 'Student registered successfully',
+                data: student
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
     login = async (req, res, next) => {
         try {
             const { enrollmentNumber, password } = req.body;
