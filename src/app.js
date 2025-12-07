@@ -12,7 +12,7 @@ import timetableRoutes from './routes/timetable.routes.js';
 import errorHandler from './middlewares/errorHandler.middleware.js';
 import { corsOptions } from './config/corsOptions.js'; // Retained from original as it's used by cors()
 import qrRoutes from "./routes/Qr.routes.js";
-
+import classSessionRoutes from "./routes/classSession.routes.js";
 const app = express();
 
 // Middleware
@@ -30,6 +30,7 @@ app.use('/api/schedule', scheduleRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/timetable', timetableRoutes);
 app.use("/api/qr", qrRoutes);
+app.use("/api/classSession", classSessionRoutes);
 
 
 // Error Handler

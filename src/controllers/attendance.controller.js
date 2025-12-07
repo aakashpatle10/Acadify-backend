@@ -1,7 +1,7 @@
 // controllers/attendance.controller.js
-import ClassSession from '../models/ClassSession.model.js';
+import ClassSession from '../models/classSession.model.js';
 import Attendance from '../models/Attendance.model.js';
-import {QRService} from '../services/Qr.service.js';
+import { QRService } from '../services/Qr.service.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 
 // Start a new class session

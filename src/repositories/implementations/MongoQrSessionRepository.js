@@ -1,5 +1,5 @@
 // repositories/implementations/MongoQrSessionRepository.js
-import QRSession from "../../models/Qrsession.model.js";
+import QRSession from "../../models/qrsession.model.js";
 import { IQRSessionRepository } from "../contracts/IQrSessionRepository.js";
 
 export class QRSessionRepositoryImpl extends IQRSessionRepository {

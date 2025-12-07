@@ -1,43 +1,31 @@
-// models/ClassSession.model.js
-import mongoose from 'mongoose';
+// src/models/classSession.model.js
+import mongoose from "mongoose";
 
-const classSessionSchema = new mongoose.Schema({
-    teacherId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Teacher',
-        required: true
+const classSessionSchema = new mongoose.Schema(
+  {
+    name: {                // e.g. "BSc-CS-1A"
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
     },
-    classId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Class',
-        required: true
+    department: {
+      type: String,
+      trim: true,
     },
-    timetableId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Timetable',
-        required: true
+    year: {
+      type: Number,
     },
-    subject: {
-        type: String,
-        required: true
+    section: {
+      type: String,
+      trim: true,
     },
-    startTime: {
-        type: Date,
-        required: true
-    },
-    endTime: {
-        type: Date,
-        required: true
-    },
-    activeQrToken: {
-        type: String
-    },
-    isLive: {
-        type: Boolean,
-        default: true
-    }
-}, {
-    timestamps: true
-});
+  },
+  { timestamps: true }
+);
 
-export default mongoose.model('ClassSession', classSessionSchema);
+const ClassSession =
+  mongoose.models.ClassSession ||
+  mongoose.model("ClassSession", classSessionSchema);
+
+export default ClassSession;

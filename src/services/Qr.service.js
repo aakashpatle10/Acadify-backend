@@ -3,7 +3,7 @@ import QRCode from "qrcode";
 import Timetable from "../models/timetable.model.js";
 import Teacher from "../models/teacher.model.js";
 import { QRSessionRepositoryImpl } from "../repositories/implementations/MongoQrSessionRepository.js";
-import { signAttendanceToken } from "../utils/attendanceToken.js";
+import { signAttendanceToken } from "../utils/attendancetoken.js";
 import { AppError } from "../utils/errors.js";
 
 const qrSessionRepo = new QRSessionRepositoryImpl();
@@ -30,7 +30,7 @@ export class QRService {
     }
 
     // 2) Timetable slot lao
-    const timetable = await Timetable.findById(timetableId).populate("classId");
+    const timetable = await Timetable.findById(timetableId);
     if (!timetable) {
       throw new AppError("Timetable not found", 404);
     }
@@ -47,7 +47,7 @@ export class QRService {
 
     // 5) Payload tayar karo
     const payload = {
-      classId: String(timetable.classId),
+      classSessionId: String(timetable.classSessionId),
       timetableId: String(timetable._id),
       teacherId: String(teacher._id),
     };
@@ -58,7 +58,7 @@ export class QRService {
     // 7) QRSession DB me save karo
     const qrSession = await qrSessionRepo.create({
       token,
-      classId: timetable.classId,
+      classSessionId: timetable.classSessionId,
       timetableId: timetable._id,
       teacherId: teacher._id,
       subject: timetable.subject,

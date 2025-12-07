@@ -66,6 +66,28 @@ class TeacherService {
         }
     }
 
+    async registerTeacher(teacherData) {
+        try {
+            // Public registration - no creatorId required
+            const teacher = await this.teacherRepository.create(teacherData);
+
+            return {
+                id: teacher._id,
+                email: teacher.email,
+                firstName: teacher.firstName,
+                lastName: teacher.lastName,
+                employeeId: teacher.employeeId,
+                department: teacher.department,
+                subject: teacher.subject,
+                role: teacher.role
+            };
+        } catch (error) {
+            if (error instanceof AppError) throw error;
+            logger.error('Register teacher error:', error);
+            throw new AppError('Failed to register teacher', 500);
+        }
+    }
+
     async createTeacher(teacherData, creatorId) {
         try {
             const newTeacherData = {

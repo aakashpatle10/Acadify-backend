@@ -1,22 +1,28 @@
-// repositories/implementations/MongoTimetableRepository.js
+// src/repositories/implementations/MongoTimetableRepository.js
 import Timetable from "../../models/timetable.model.js";
 import { ITimetableRepository } from "../contracts/ITimetableRepository.js";
 
-export class TimetableRepositoryImpl extends ITimetableRepository {
-  async findExisting(classId, teacherId, day, startTime) {
-    return await Timetable.findOne({
-      classId,
-      teacherId,
-      day,
-      startTime
-    });
-  }
-
+export class MongoTimetableRepository extends ITimetableRepository {
   async create(data) {
     return await Timetable.create(data);
   }
 
-  async bulkInsert(list) {
-    return await Timetable.insertMany(list);
+  async findByTeacherId(teacherId) {
+    return await Timetable.find({ teacherId })
+      .populate("classSessionId")
+      .sort({ day: 1, startTime: 1 });
+  }
+
+  async findByClassSessionId(classSessionId) {
+    return await Timetable.find({ classSessionId })
+      .populate("classSessionId")
+      .populate("teacherId")
+      .sort({ day: 1, startTime: 1 });
+  }
+
+  async findById(id) {
+    return await Timetable.findById(id)
+      .populate("classSessionId")
+      .populate("teacherId");
   }
 }

@@ -1,6 +1,6 @@
 // controllers/analytics.controller.js
 import Attendance from '../models/Attendance.model.js';
-import ClassSession from '../models/ClassSession.model.js';
+import ClassSession from '../models/classSession.model.js';
 import Teacher from '../models/teacher.model.js';
 import Student from '../models/students.model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';

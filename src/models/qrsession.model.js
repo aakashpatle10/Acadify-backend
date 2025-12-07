@@ -9,7 +9,7 @@ const qrSessionSchema = new mongoose.Schema(
       unique: true,
     },
 
-    classId: {
+    classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClassSession",
       required: true,

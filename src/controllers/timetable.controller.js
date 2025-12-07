@@ -1,30 +1,72 @@
-// controllers/timetable.controller.js
+// src/controllers/timetable.controller.js
 import { TimetableService } from "../services/timetable.service.js";
-import { importTimetableValidator as timetableImportSchema } from "../middlewares/validators/timetable.validation.js";
+import { AppError } from "../utils/errors.js";
 
 export class TimetableController {
-  static async importTimetable(req, res) {
+  // POST /api/timetables
+  static async create(req, res, next) {
     try {
-      const data = req.body;
-
-      // validation
-      const { error } = timetableImportSchema.validate(data);
-      if (error) {
-        return res.status(400).json({ error: error.message });
-      }
-
-      const result = await TimetableService.import(data);
+      const result = await TimetableService.createTimetable(req.body);
 
       return res.status(201).json({
-        message: "Timetable imported successfully",
-        createdCount: result.created.length,
-        skippedCount: result.skipped.length,
-        skipped: result.skipped
+        success: true,
+        message: "Timetable entry created successfully",
+        data: result,
       });
-
     } catch (err) {
-      console.error("Timetable import error:", err);
-      res.status(500).json({ error: err.message });
+      next(err);
+    }
+  }
+
+  // GET /api/timetables/teacher/:teacherId  (public / for testing)
+  static async getByTeacher(req, res, next) {
+    try {
+      const { teacherId } = req.params;
+
+      const data = await TimetableService.getByTeacher(teacherId);
+
+      return res.status(200).json({
+        success: true,
+        data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // GET /api/timetables/my  (logged-in teacher ke liye)
+  static async getMyTimetables(req, res, next) {
+    try {
+      const teacherId = req.user?.id; // authMiddleware se
+
+      if (!teacherId) {
+        return next(new AppError("User not authenticated", 401));
+      }
+
+      const data = await TimetableService.getByTeacher(teacherId);
+
+      return res.status(200).json({
+        success: true,
+        data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // GET /api/timetables/class/:classSessionId
+  static async getByClassSession(req, res, next) {
+    try {
+      const { classSessionId } = req.params;
+
+      const data = await TimetableService.getByClassSession(classSessionId);
+
+      return res.status(200).json({
+        success: true,
+        data,
+      });
+    } catch (err) {
+      next(err);
     }
   }
 }

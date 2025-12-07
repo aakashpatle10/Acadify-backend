@@ -37,12 +37,10 @@ const teacherSchema = new mongoose.Schema({
     },
     designation: {
         type: String,
-        required: true,
         trim: true
     },
     employeeId: {
         type: String,
-        required: true,
         unique: true,
         trim: true
     },
@@ -62,8 +60,7 @@ const teacherSchema = new mongoose.Schema({
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Admin',
-        required: true
+        ref: 'Admin'
     }
 }, {
     timestamps: true

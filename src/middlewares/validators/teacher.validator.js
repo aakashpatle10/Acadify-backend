@@ -49,6 +49,10 @@ const createTeacherSchema = Joi.object({
     employeeId: Joi.string().required().trim().messages({
         'string.empty': 'Employee ID is required',
         'any.required': 'Employee ID is required'
+    }),
+    subject: Joi.string().required().trim().messages({
+        'string.empty': 'Subject is required',
+        'any.required': 'Subject is required'
     })
 });
 

@@ -7,6 +7,7 @@ import { loginValidator, createTeacherValidator } from '../middlewares/validator
 const router = express.Router();
 
 // Public routes
+router.post('/register', createTeacherValidator, teacherController.register);
 router.post('/login', loginValidator, teacherController.login);
 
 // Protected routes (Teacher Profile)

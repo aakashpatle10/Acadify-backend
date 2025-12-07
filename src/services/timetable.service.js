@@ -1,64 +1,34 @@
-// services/timetable.service.js
-import { TimetableRepositoryImpl } from "../repositories/implementations/MongoTimetableRepository.js";
-import Class from "../models/ClassSession.model.js";
-import Teacher from "../models/teacher.model.js";
+// src/services/timetable.service.js
+import { MongoTimetableRepository } from "../repositories/implementations/MongoTimetableRepository.js";
+import { AppError } from "../utils/errors.js";
 
-const timetableRepo = new TimetableRepositoryImpl();
+const timetableRepo = new MongoTimetableRepository();
 
 export class TimetableService {
-  static async import(jsonData) {
-    let created = [];
-    let skipped = [];
+  static async createTimetable(payload) {
+    // yahan future me duplicate slot check kar sakte ho (same class+time)
+    return await timetableRepo.create(payload);
+  }
 
-    for (const row of jsonData) {
-      const {
-        className,
-        day,
-        subject,
-        teacherCode,
-        startTime,
-        endTime
-      } = row;
-
-      // STEP 1: find or create class
-      let cls = await Class.findOne({ name: className });
-      if (!cls) cls = await Class.create({ name: className });
-
-      // STEP 2: find or create teacher
-      let teacher = await Teacher.findOne({ teacherId: teacherCode });
-      if (!teacher) {
-        teacher = await Teacher.create({
-          teacherId: teacherCode,
-          name: teacherCode,
-        });
-      }
-
-      // STEP 3: duplicate check
-      const existing = await timetableRepo.findExisting(
-        cls._id,
-        teacher._id,
-        day,
-        startTime
-      );
-
-      if (existing) {
-        skipped.push({ row, reason: "Slot already exists" });
-        continue;
-      }
-
-      // STEP 4: create timetable entry
-      const newEntry = await timetableRepo.create({
-        classId: cls._id,
-        teacherId: teacher._id,
-        subject,
-        day,
-        startTime,
-        endTime
-      });
-
-      created.push(newEntry);
+  static async getByTeacher(teacherId) {
+    if (!teacherId) {
+      throw new AppError("Teacher id is required", 400);
     }
+    return await timetableRepo.findByTeacherId(teacherId);
+  }
 
-    return { created, skipped };
+  static async getByClassSession(classSessionId) {
+    if (!classSessionId) {
+      throw new AppError("ClassSession id is required", 400);
+    }
+    return await timetableRepo.findByClassSessionId(classSessionId);
+  }
+
+  static async getById(id) {
+    const tt = await timetableRepo.findById(id);
+    if (!tt) {
+      throw new AppError("Timetable not found", 404);
+    }
+    return tt;
   }
 }
