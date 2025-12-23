@@ -7,7 +7,7 @@ import adminRoutes from './routes/admin.routes.js';
 import teacherRoutes from './routes/teacher.routes.js';
 import timetableRoutes from './routes/timetable.routes.js';
 import errorHandler from './middlewares/errorHandler.middleware.js';
-import { corsOptions } from './config/corsOptions.js'; // Retained from original as it's used by cors()
+import { corsOptions } from './config/corsOptions.js'; 
 import qrRoutes from "./routes/qr.routes.js";
 import classSessionRoutes from "./routes/classSession.routes.js";
 const app = express();
