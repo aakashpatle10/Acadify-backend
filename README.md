@@ -10,9 +10,6 @@ This service handles authentication, authorization, and core business logic for 
 
 https://acadify-backend-553k.onrender.com
 
-**Base URL**
-https://acadify-backend-553k.onrender.com/api
-
 
 
 ---
