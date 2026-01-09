@@ -1,4 +1,3 @@
-// controllers/Qr.controller.js
 import {QRService} from "../services/qr.service.js";
 import { AppError } from "../utils/errors.js";
 

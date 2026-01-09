@@ -1,9 +1,7 @@
-// src/controllers/timetable.controller.js
 import { TimetableService } from "../services/timetable.service.js";
 import { AppError } from "../utils/errors.js";
 
 export class TimetableController {
-  // POST /api/timetables
   static async create(req, res, next) {
     try {
       const result = await TimetableService.createTimetable(req.body);
@@ -18,7 +16,6 @@ export class TimetableController {
     }
   }
 
-  // GET /api/timetables/teacher/:teacherId  (public / for testing)
   static async getByTeacher(req, res, next) {
     try {
       const { teacherId } = req.params;
@@ -34,10 +31,9 @@ export class TimetableController {
     }
   }
 
-  // GET /api/timetables/my  (logged-in teacher ke liye)
   static async getMyTimetables(req, res, next) {
     try {
-      const teacherId = req.user?.id; // authMiddleware se
+      const teacherId = req.user?.id; 
 
       if (!teacherId) {
         return next(new AppError("User not authenticated", 401));
@@ -54,7 +50,6 @@ export class TimetableController {
     }
   }
 
-  // GET /api/timetables/class/:classSessionId
   static async getByClassSession(req, res, next) {
     try {
       const { classSessionId } = req.params;

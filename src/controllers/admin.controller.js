@@ -1,4 +1,3 @@
-// controllers/admin.controller.js
 import AdminService from '../services/admin.service.js';
 import jwtService from '../utils/jwt.js';
 import { redisClient } from '../config/redis.js';
@@ -11,7 +10,6 @@ class AdminController {
 
     register = async (req, res, next) => {
         try {
-            // For testing purposes - public registration
             const admin = await this.adminService.registerAdmin(req.body);
 
             res.status(201).json({
@@ -29,19 +27,18 @@ class AdminController {
             const { email, password } = req.body;
             const result = await this.adminService.login(email, password);
 
-            // Set cookies
             res.cookie('token', result.token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 15 * 60 * 1000 // 15 minutes
+                maxAge: 15 * 60 * 1000 
             });
 
             res.cookie('refreshToken', result.refreshToken, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+                maxAge: 7 * 24 * 60 * 60 * 1000 
             });
 
             res.status(200).json({
@@ -62,7 +59,6 @@ class AdminController {
 
             const tokens = await this.adminService.refreshToken(refreshToken);
 
-            // Set new cookies
             res.cookie('token', tokens.accessToken, {
                 httpOnly: true,
                 secure: true,
@@ -97,18 +93,15 @@ class AdminController {
                 const exp = decoded.exp * 1000;
                 const ttl = Math.floor((exp - Date.now()) / 1000);
 
-                // Blacklist the token
                 if (ttl > 0 && redisClient.isOpen) {
                     await redisClient.setEx(`bl_${token}`, ttl, 'blacklisted');
                 }
 
-                // Delete refresh token
                 if (redisClient.isOpen) {
                     await redisClient.del(`admin_refresh_${decoded.userId}`);
                 }
             }
 
-            // Clear cookies
             res.clearCookie('token', {
                 httpOnly: true,
                 secure: true,

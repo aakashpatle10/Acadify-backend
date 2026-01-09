@@ -1,12 +1,10 @@
-// models/timetable.model.js
-// src/models/timetable.model.js
 import mongoose from "mongoose";
 
 const timetableSchema = new mongoose.Schema(
   {
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ClassSession",          // tumhara Class model
+      ref: "ClassSession",         
       required: true,
     },
     teacherId: {
@@ -20,17 +18,17 @@ const timetableSchema = new mongoose.Schema(
       trim: true,
     },
     day: {
-      type: String,                 // e.g. "Monday"
+      type: String,                 
       required: true,
       trim: true,
     },
     startTime: {
-      type: String,                 // "10:00"
+      type: String,                 
       required: true,
       trim: true,
     },
     endTime: {
-      type: String,                 // "11:00"
+      type: String,                 
       required: true,
       trim: true,
     },

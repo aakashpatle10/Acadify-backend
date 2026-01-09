@@ -1,9 +1,8 @@
-// src/models/classSession.model.js
 import mongoose from "mongoose";
 
 const classSessionSchema = new mongoose.Schema(
   {
-    name: {                // e.g. "BSc-CS-1A"
+    name: {              
       type: String,
       required: true,
       unique: true,

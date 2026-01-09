@@ -1,4 +1,3 @@
-// models/qrsession.model.js
 import mongoose from "mongoose";
 
 const qrSessionSchema = new mongoose.Schema(
@@ -47,7 +46,7 @@ const qrSessionSchema = new mongoose.Schema(
 
     maxUses: {
       type: Number,
-      default: 0, // 0 = unlimited
+      default: 0, 
     },
 
     uses: {
@@ -66,7 +65,6 @@ const qrSessionSchema = new mongoose.Schema(
   }
 );
 
-// expiresAt ke ~1 min baad document auto-remove
 qrSessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 60 });
 
 qrSessionSchema.methods.isValidNow = function () {

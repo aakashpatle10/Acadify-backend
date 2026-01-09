@@ -1,4 +1,3 @@
-// repositories/contracts/ITeacherRepository.js
 class ITeacherRepository {
     async findByEmail(email) {
         throw new Error('Method not implemented');

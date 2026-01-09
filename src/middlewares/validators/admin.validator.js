@@ -1,4 +1,3 @@
-// middlewares/validators/admin.validator.js
 import Joi from 'joi';
 import { AppError } from '../../utils/errors.js';
 

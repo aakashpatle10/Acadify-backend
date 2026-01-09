@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      select: false,          // 👈 login ke time .select('+password') sahi kaam karega
+      select: false,          
     },
     roleId: {
       type: mongoose.Schema.Types.ObjectId, 
@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
-    // 🔹 Timetable / dashboard ke liye important fields
     department: {
       type: String,
       required: true,
@@ -59,7 +58,6 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
-    // 🔹 Yahi se student ko ClassSession se link karenge
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClassSession",
@@ -83,4 +81,4 @@ userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-export default mongoose.model("User", userSchema); // naam same chhoda, baaki code ispe depend hai
+export default mongoose.model("User", userSchema); 

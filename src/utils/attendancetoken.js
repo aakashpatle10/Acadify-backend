@@ -1,11 +1,9 @@
-// utils/attendancetoken.js
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.JWT_SECRET; // same secret login + QR ke liye
-const DEFAULT_EXPIRES = "10s"; // default 10 seconds
+const SECRET = process.env.JWT_SECRET; 
+const DEFAULT_EXPIRES = "10s"; 
 
 if (!SECRET) {
-  // optional: warn in dev
   console.warn("JWT_SECRET is not defined. Please set it in your .env");
 }
 

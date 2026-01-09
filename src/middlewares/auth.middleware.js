@@ -1,4 +1,3 @@
-// middlewares/auth.middleware.js
 import jwtService from '../utils/jwt.js';
 import { AppError } from '../utils/errors.js';
 import { redisClient } from '../config/redis.js';
@@ -13,7 +12,6 @@ export const authMiddleware = async (req, res, next) => {
             throw new AppError('Unauthorized - No token provided', 401);
         }
 
-        // Check if token is blacklisted
         if (redisClient.isOpen) {
             const isBlacklisted = await redisClient.get(`bl_${token}`);
             if (isBlacklisted) {
@@ -26,13 +24,10 @@ export const authMiddleware = async (req, res, next) => {
         req.enrollmentNumber = decoded.enrollmentNumber;
         req.roleId = decoded.roleId;
 
-        // Populate req.user for compatibility with requireRole and controllers
-        // Note: decoded.roleId actually contains the role name (e.g., "teacher", "admin", "student")
-        // because the login services pass role name as the third parameter to generateTokens
         req.user = {
             id: decoded.userId,
             _id: decoded.userId,
-            role: decoded.roleId, // roleId field contains the role name
+            role: decoded.roleId,
             enrollmentNumber: decoded.enrollmentNumber
         };
 

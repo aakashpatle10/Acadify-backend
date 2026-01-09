@@ -1,4 +1,3 @@
-// src/repositories/contracts/ITimetableRepository.js
 export class ITimetableRepository {
   create(data) {
     throw new Error("Method not implemented.");

@@ -1,4 +1,3 @@
-// app.js
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -12,13 +11,11 @@ import qrRoutes from "./routes/qr.routes.js";
 import classSessionRoutes from "./routes/classSession.routes.js";
 const app = express();
 
-// Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Routes
 app.use('/api/student', studentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/teacher', teacherRoutes);
@@ -27,7 +24,6 @@ app.use("/api/qr", qrRoutes);
 app.use("/api/classSession", classSessionRoutes);
 
 
-// Error Handler
 app.use(errorHandler);
 
 export default app;

@@ -1,4 +1,3 @@
-// controllers/teacher.controller.js
 import TeacherService from '../services/teacher.service.js';
 import { AppError } from '../utils/errors.js';
 
@@ -9,7 +8,6 @@ class TeacherController {
 
     register = async (req, res, next) => {
         try {
-            // For testing purposes - public registration
             const teacher = await this.teacherService.registerTeacher(req.body);
 
             res.status(201).json({
@@ -27,19 +25,18 @@ class TeacherController {
             const { email, password } = req.body;
             const result = await this.teacherService.login(email, password);
 
-            // Set cookies
             res.cookie('token', result.token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 15 * 60 * 1000 // 15 minutes
+                maxAge: 15 * 60 * 1000 
             });
 
             res.cookie('refreshToken', result.refreshToken, {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+                maxAge: 7 * 24 * 60 * 60 * 1000 
             });
 
             res.status(200).json({
@@ -54,11 +51,7 @@ class TeacherController {
     createTeacher = async (req, res, next) => {
         try {
             const creatorId = req.userId;
-            // Ensure only Sub Admin (HOD) can create teachers
-            // This check can also be in middleware, but double checking here is fine
-            // Assuming req.roleId or similar is available, but auth middleware sets req.userId
-            // We rely on route protection for role check
-
+            
             const teacher = await this.teacherService.createTeacher(req.body, creatorId);
 
             res.status(201).json({

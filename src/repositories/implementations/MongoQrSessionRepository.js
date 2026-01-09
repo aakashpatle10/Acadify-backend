@@ -1,4 +1,3 @@
-// repositories/implementations/MongoQrSessionRepository.js
 import QRSession from "../../models/qrSession.model.js";
 import { IQRSessionRepository } from "../contracts/IQrSessionRepository.js";
 

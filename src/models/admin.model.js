@@ -1,4 +1,3 @@
-// models/admin.model.js
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -44,7 +43,6 @@ const adminSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Hash password before saving
 adminSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 10);
@@ -52,7 +50,6 @@ adminSchema.pre('save', async function (next) {
     next();
 });
 
-// Compare password method
 adminSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };

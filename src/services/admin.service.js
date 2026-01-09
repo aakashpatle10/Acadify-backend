@@ -1,4 +1,3 @@
-// services/admin.service.js
 import MongoAdminRepository from '../repositories/implementations/MongoAdminRepository.js';
 import jwtService from '../utils/jwt.js';
 import { AppError } from '../utils/errors.js';
@@ -12,10 +11,9 @@ class AdminService {
 
     async registerAdmin(adminData) {
         try {
-            // Public registration - creates a main_admin by default for testing
             const adminDataWithRole = {
                 ...adminData,
-                role: adminData.role || 'main_admin' // Default to main_admin if not specified
+                role: adminData.role || 'main_admin' 
             };
             const admin = await this.adminRepository.createAdmin(adminDataWithRole);
 
@@ -57,7 +55,6 @@ class AdminService {
                 admin.role
             );
 
-            // Store refresh token in Redis
             if (redisClient.isOpen) {
                 try {
                     await redisClient.setEx(
@@ -93,7 +90,6 @@ class AdminService {
         try {
             const decoded = jwtService.verifyToken(refreshToken);
 
-            // Verify refresh token in Redis
             if (redisClient.isOpen) {
                 const storedToken = await redisClient.get(`admin_refresh_${decoded.userId}`);
                 if (!storedToken || storedToken !== refreshToken) {
@@ -116,7 +112,6 @@ class AdminService {
                 admin.role
             );
 
-            // Update refresh token in Redis
             if (redisClient.isOpen) {
                 await redisClient.setEx(
                     `admin_refresh_${admin._id}`,
@@ -149,7 +144,6 @@ class AdminService {
 
             await this.adminRepository.updateAdminPassword(email, newPassword);
 
-            // Invalidate all refresh tokens for this admin
             if (redisClient.isOpen) {
                 await redisClient.del(`admin_refresh_${admin._id}`);
             }
@@ -227,10 +221,9 @@ class AdminService {
 
     async updateSubAdmin(id, updateData) {
         try {
-            // Prevent updating critical fields like password or role directly through this method
             delete updateData.password;
             delete updateData.role;
-            delete updateData.email; // Email update might need verification logic, skipping for now
+            delete updateData.email; 
 
             const subAdmin = await this.adminRepository.updateSubAdmin(id, updateData);
 
@@ -254,7 +247,6 @@ class AdminService {
                 throw new AppError('Sub-admin not found', 404);
             }
 
-            // Invalidate refresh tokens
             if (redisClient.isOpen) {
                 await redisClient.del(`admin_refresh_${id}`);
             }

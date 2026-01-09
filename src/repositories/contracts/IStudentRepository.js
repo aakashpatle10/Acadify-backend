@@ -1,4 +1,3 @@
-// repositories/contracts/IStudentRepository.js
 class IStudentRepository {
     async findStudentByEnrollmentNumber(enrollmentNumber) {
         throw new Error('Method not implemented');

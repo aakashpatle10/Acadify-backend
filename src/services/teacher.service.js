@@ -1,4 +1,3 @@
-// services/teacher.service.js
 import MongoTeacherRepository from '../repositories/implementations/MongoTeacherRepository.js';
 import jwtService from '../utils/jwt.js';
 import { AppError } from '../utils/errors.js';
@@ -33,7 +32,6 @@ class TeacherService {
                 teacher.role
             );
 
-            // Store refresh token in Redis
             if (redisClient.isOpen) {
                 try {
                     await redisClient.setEx(
@@ -68,7 +66,6 @@ class TeacherService {
 
     async registerTeacher(teacherData) {
         try {
-            // Public registration - no creatorId required
             const teacher = await this.teacherRepository.create(teacherData);
 
             return {
@@ -139,7 +136,6 @@ class TeacherService {
 
     async updateTeacher(id, updateData) {
         try {
-            // Prevent updating critical fields
             delete updateData.password;
             delete updateData.role;
             delete updateData.email;
@@ -167,7 +163,6 @@ class TeacherService {
                 throw new AppError('Teacher not found', 404);
             }
 
-            // Invalidate refresh tokens
             if (redisClient.isOpen) {
                 await redisClient.del(`teacher_refresh_${id}`);
             }

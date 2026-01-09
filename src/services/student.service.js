@@ -1,4 +1,3 @@
-// services/student.service.js
 import MongoStudentRepository from '../repositories/implementations/MongoStudentRepository.js';
 import jwtService from '../utils/jwt.js';
 import { AppError } from '../utils/errors.js';
@@ -89,7 +88,7 @@ class StudentService {
           year: student.year,
           semester: student.semester,
           classSessionId: student.classSessionId,
-          role: 'student', // frontend ke liye explicit
+          role: 'student', 
         },
         token: tokens.accessToken,
         refreshToken: tokens.refreshToken,
@@ -101,12 +100,10 @@ class StudentService {
     }
   }
 
-  // 🔹 Refresh token flow (mobile / long sessions)
   async refreshToken(refreshToken) {
     try {
       const decoded = jwtService.verifyToken(refreshToken);
 
-      // Verify refresh token in Redis
       if (redisClient.isOpen) {
         const storedToken = await redisClient.get(
           `student_refresh_${decoded.userId}`
@@ -129,7 +126,6 @@ class StudentService {
         student.roleId
       );
 
-      // Update refresh token in Redis
       if (redisClient.isOpen) {
         await redisClient.setEx(
           `student_refresh_${student._id}`,
@@ -155,7 +151,6 @@ class StudentService {
     }
   }
 
-  // 🔹 Reset password using enrollmentNumber + email
   async resetPassword(enrollmentNumber, email, newPassword) {
     try {
       const student =
@@ -176,7 +171,6 @@ class StudentService {
         newPassword
       );
 
-      // Invalidate all refresh tokens for this student
       if (redisClient.isOpen) {
         await redisClient.del(`student_refresh_${student._id}`);
       }
@@ -195,7 +189,6 @@ class StudentService {
     }
   }
 
-  // 🔹 Get logged-in student profile
   async getProfile(userId) {
     try {
       const student = await this.studentRepository.findStudentById(userId);
@@ -225,7 +218,6 @@ class StudentService {
     }
   }
 
-  // 🔹 Admin / internal create
   async createStudent(studentData) {
     try {
       const student = await this.studentRepository.createStudent(studentData);
@@ -249,7 +241,6 @@ class StudentService {
     }
   }
 
-  // 🔹 List all students (for admin)
   async getAllStudents(filter = {}) {
     try {
       return await this.studentRepository.findAll(filter);
@@ -260,10 +251,8 @@ class StudentService {
     }
   }
 
-  // 🔹 Update student (admin)
   async updateStudent(id, updateData) {
     try {
-      // Prevent updating critical fields
       delete updateData.password;
       delete updateData.enrollmentNumber;
       delete updateData.email;
@@ -282,7 +271,6 @@ class StudentService {
     }
   }
 
-  // 🔹 Delete student (admin)
   async deleteStudent(id) {
     try {
       const student = await this.studentRepository.delete(id);
@@ -291,7 +279,6 @@ class StudentService {
         throw new AppError('Student not found', 404);
       }
 
-      // Invalidate refresh tokens
       if (redisClient.isOpen) {
         await redisClient.del(`student_refresh_${id}`);
       }

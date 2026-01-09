@@ -1,11 +1,9 @@
-// config/corsOptions.js
 import config from "./environment.js";
 
 const { ALLOWED_ORIGINS } = config;
 
 export const corsOptions = {
     origin: (origin, callback) => {
-        // Allow requests with no origin (like mobile apps, curl, etc.)
         if (!origin) return callback(null, true);
 
         if (ALLOWED_ORIGINS.indexOf(origin) === -1) {

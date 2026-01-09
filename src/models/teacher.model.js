@@ -1,4 +1,3 @@
-// models/teacher.model.js
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -66,7 +65,6 @@ const teacherSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Hash password before saving
 teacherSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
@@ -79,12 +77,10 @@ teacherSchema.pre('save', async function (next) {
     }
 });
 
-// Method to compare password
 teacherSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
 };
 
-// Check if the model is already defined
 const Teacher = mongoose.models.Teacher || mongoose.model('Teacher', teacherSchema);
 
 export default Teacher;

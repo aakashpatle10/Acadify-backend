@@ -1,8 +1,6 @@
-// middlewares/validators/student.validator.js
 import Joi from "joi";
 import { AppError } from "../../utils/errors.js";
 
-// 🔹 LOGIN – enrollmentNumber + password
 const loginSchema = Joi.object({
   enrollmentNumber: Joi.string().required().messages({
     "any.required": "Enrollment number is required",
@@ -14,7 +12,6 @@ const loginSchema = Joi.object({
   }),
 });
 
-// 🔹 RESET PASSWORD – enrollmentNumber + email + newPassword
 const resetPasswordSchema = Joi.object({
   enrollmentNumber: Joi.string().required().messages({
     "any.required": "Enrollment number is required",
@@ -30,7 +27,6 @@ const resetPasswordSchema = Joi.object({
   }),
 });
 
-// 🔹 CREATE / REGISTER STUDENT
 const createStudentSchema = Joi.object({
   email: Joi.string().email().required().trim().messages({
     "string.email": "Please enter a valid email",
@@ -88,14 +84,12 @@ const createStudentSchema = Joi.object({
       "string.pattern.base": "Phone number must be 10 digits",
     }),
 
-  // 👇 yahi se timetable link hoga (student kis classSession me hai)
   classSessionId: Joi.string().required().messages({
     "string.empty": "Class session is required",
     "any.required": "Class session is required",
   }),
 });
 
-// 🔹 Common validator wrapper
 const validate =
   (schema) =>
   (req, res, next) => {

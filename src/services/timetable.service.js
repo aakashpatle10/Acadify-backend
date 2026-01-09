@@ -1,4 +1,3 @@
-// src/services/timetable.service.js
 import { MongoTimetableRepository } from "../repositories/implementations/MongoTimetableRepository.js";
 import { AppError } from "../utils/errors.js";
 
@@ -6,7 +5,6 @@ const timetableRepo = new MongoTimetableRepository();
 
 export class TimetableService {
   static async createTimetable(payload) {
-    // yahan future me duplicate slot check kar sakte ho (same class+time)
     return await timetableRepo.create(payload);
   }
 

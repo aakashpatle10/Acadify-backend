@@ -1,4 +1,3 @@
-// routes/qr.routes.js
 import express from "express";
 import { QRController } from "../controllers/qr.controller.js";
 import { authMiddleware, requireRole } from "../middlewares/auth.middleware.js";
@@ -10,8 +9,8 @@ router.post(
   "/generate",
   authMiddleware,
   requireRole("teacher"),
-  generateQrValidator,      // <-- pehle validator
-  QRController.generate     // <-- fir controller
+  generateQrValidator,  
+  QRController.generate     
 );
 
 export default router;

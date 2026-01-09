@@ -1,11 +1,9 @@
-// config/redis.js
 import redis from "redis";
 import config from "./environment.js";
 import logger from "../utils/logger.js";
 
 const { REDIS_HOST, REDIS_PORT, REDIS_PASSWORD } = config;
 
-// Parse host if it contains port (format: host:port)
 let redisHost = REDIS_HOST;
 let redisPort = REDIS_PORT;
 

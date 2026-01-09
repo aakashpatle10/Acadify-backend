@@ -1,4 +1,3 @@
-// utils/read_pdf.js
 const fs = require('fs');
 const pdf = require('pdf-extraction');
 

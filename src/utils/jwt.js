@@ -1,4 +1,3 @@
-// utils/jwt.js
 import jwt from 'jsonwebtoken';
 import config from '../config/environment.js';
 

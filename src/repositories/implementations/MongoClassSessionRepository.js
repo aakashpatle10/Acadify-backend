@@ -1,4 +1,3 @@
-// src/repositories/implementations/MongoClassSessionRepository.js
 import ClassSession from "../../models/classSession.model.js";
 import { IClassSessionRepository } from "../contracts/IClassSessionRepository.js";
 
