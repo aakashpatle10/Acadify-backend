@@ -2,6 +2,7 @@ import { TimetableService } from "../services/timetable.service.js";
 import { AppError } from "../utils/errors.js";
 
 export class TimetableController {
+  
   static async create(req, res, next) {
     try {
       const result = await TimetableService.createTimetable(req.body);
@@ -16,6 +17,7 @@ export class TimetableController {
     }
   }
 
+  
   static async getByTeacher(req, res, next) {
     try {
       const { teacherId } = req.params;
@@ -31,6 +33,7 @@ export class TimetableController {
     }
   }
 
+  
   static async getMyTimetables(req, res, next) {
     try {
       const teacherId = req.user?.id; 
@@ -50,6 +53,7 @@ export class TimetableController {
     }
   }
 
+  
   static async getByClassSession(req, res, next) {
     try {
       const { classSessionId } = req.params;

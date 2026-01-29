@@ -4,6 +4,7 @@ const { ALLOWED_ORIGINS } = config;
 
 export const corsOptions = {
     origin: (origin, callback) => {
+        
         if (!origin) return callback(null, true);
 
         if (ALLOWED_ORIGINS.indexOf(origin) === -1) {

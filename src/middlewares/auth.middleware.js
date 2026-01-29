@@ -12,6 +12,7 @@ export const authMiddleware = async (req, res, next) => {
             throw new AppError('Unauthorized - No token provided', 401);
         }
 
+        
         if (redisClient.isOpen) {
             const isBlacklisted = await redisClient.get(`bl_${token}`);
             if (isBlacklisted) {
@@ -24,10 +25,13 @@ export const authMiddleware = async (req, res, next) => {
         req.enrollmentNumber = decoded.enrollmentNumber;
         req.roleId = decoded.roleId;
 
+        
+        
+        
         req.user = {
             id: decoded.userId,
             _id: decoded.userId,
-            role: decoded.roleId,
+            role: decoded.roleId, 
             enrollmentNumber: decoded.enrollmentNumber
         };
 

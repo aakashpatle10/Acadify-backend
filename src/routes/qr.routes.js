@@ -1,3 +1,4 @@
+
 import express from "express";
 import { QRController } from "../controllers/qr.controller.js";
 import { authMiddleware, requireRole } from "../middlewares/auth.middleware.js";
@@ -10,6 +11,7 @@ router.post(
   authMiddleware,
   requireRole("teacher"),
   generateQrValidator,  
+  generateQrValidator,      
   QRController.generate     
 );
 

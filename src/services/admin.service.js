@@ -11,6 +11,7 @@ class AdminService {
 
     async registerAdmin(adminData) {
         try {
+            
             const adminDataWithRole = {
                 ...adminData,
                 role: adminData.role || 'main_admin' 
@@ -55,6 +56,7 @@ class AdminService {
                 admin.role
             );
 
+            
             if (redisClient.isOpen) {
                 try {
                     await redisClient.setEx(
@@ -90,6 +92,7 @@ class AdminService {
         try {
             const decoded = jwtService.verifyToken(refreshToken);
 
+            
             if (redisClient.isOpen) {
                 const storedToken = await redisClient.get(`admin_refresh_${decoded.userId}`);
                 if (!storedToken || storedToken !== refreshToken) {
@@ -112,6 +115,7 @@ class AdminService {
                 admin.role
             );
 
+            
             if (redisClient.isOpen) {
                 await redisClient.setEx(
                     `admin_refresh_${admin._id}`,
@@ -144,6 +148,7 @@ class AdminService {
 
             await this.adminRepository.updateAdminPassword(email, newPassword);
 
+            
             if (redisClient.isOpen) {
                 await redisClient.del(`admin_refresh_${admin._id}`);
             }
@@ -221,6 +226,7 @@ class AdminService {
 
     async updateSubAdmin(id, updateData) {
         try {
+            
             delete updateData.password;
             delete updateData.role;
             delete updateData.email; 
@@ -247,6 +253,7 @@ class AdminService {
                 throw new AppError('Sub-admin not found', 404);
             }
 
+            
             if (redisClient.isOpen) {
                 await redisClient.del(`admin_refresh_${id}`);
             }

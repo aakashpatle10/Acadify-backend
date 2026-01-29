@@ -1,10 +1,12 @@
+
+
 import mongoose from "mongoose";
 
 const timetableSchema = new mongoose.Schema(
   {
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ClassSession",         
+      ref: "ClassSession",          
       required: true,
     },
     teacherId: {

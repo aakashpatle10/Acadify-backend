@@ -100,10 +100,12 @@ class StudentService {
     }
   }
 
+  
   async refreshToken(refreshToken) {
     try {
       const decoded = jwtService.verifyToken(refreshToken);
 
+      
       if (redisClient.isOpen) {
         const storedToken = await redisClient.get(
           `student_refresh_${decoded.userId}`
@@ -126,6 +128,7 @@ class StudentService {
         student.roleId
       );
 
+      
       if (redisClient.isOpen) {
         await redisClient.setEx(
           `student_refresh_${student._id}`,
@@ -151,6 +154,7 @@ class StudentService {
     }
   }
 
+  
   async resetPassword(enrollmentNumber, email, newPassword) {
     try {
       const student =
@@ -171,6 +175,7 @@ class StudentService {
         newPassword
       );
 
+      
       if (redisClient.isOpen) {
         await redisClient.del(`student_refresh_${student._id}`);
       }
@@ -189,6 +194,7 @@ class StudentService {
     }
   }
 
+  
   async getProfile(userId) {
     try {
       const student = await this.studentRepository.findStudentById(userId);
@@ -218,6 +224,7 @@ class StudentService {
     }
   }
 
+  
   async createStudent(studentData) {
     try {
       const student = await this.studentRepository.createStudent(studentData);
@@ -241,6 +248,7 @@ class StudentService {
     }
   }
 
+  
   async getAllStudents(filter = {}) {
     try {
       return await this.studentRepository.findAll(filter);
@@ -251,8 +259,10 @@ class StudentService {
     }
   }
 
+  
   async updateStudent(id, updateData) {
     try {
+      
       delete updateData.password;
       delete updateData.enrollmentNumber;
       delete updateData.email;
@@ -271,6 +281,7 @@ class StudentService {
     }
   }
 
+  
   async deleteStudent(id) {
     try {
       const student = await this.studentRepository.delete(id);
@@ -279,6 +290,7 @@ class StudentService {
         throw new AppError('Student not found', 404);
       }
 
+      
       if (redisClient.isOpen) {
         await redisClient.del(`student_refresh_${id}`);
       }

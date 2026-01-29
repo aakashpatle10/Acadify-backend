@@ -1,4 +1,4 @@
-// models/students.model.js
+
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
@@ -39,6 +39,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    
     department: {
       type: String,
       required: true,
@@ -58,6 +59,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClassSession",

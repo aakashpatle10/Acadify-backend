@@ -1,6 +1,8 @@
+
 import { ClassSessionService } from "../services/classSession.service.js";
 
 export class ClassSessionController {
+  
   static async create(req, res, next) {
     try {
       const result = await ClassSessionService.createClassSession(req.body);
@@ -15,6 +17,7 @@ export class ClassSessionController {
     }
   }
 
+  
   static async getAll(req, res, next) {
     try {
       const sessions = await ClassSessionService.getAllClassSessions();

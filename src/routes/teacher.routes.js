@@ -5,10 +5,15 @@ import { loginValidator, createTeacherValidator } from '../middlewares/validator
 
 const router = express.Router();
 
+
 router.post('/register', createTeacherValidator, teacherController.register);
 router.post('/login', loginValidator, teacherController.login);
 
+
 router.get('/profile', authMiddleware, teacherController.getProfile);
+
+
+
 
 router.post('/', authMiddleware, createTeacherValidator, teacherController.createTeacher);
 router.get('/', authMiddleware, teacherController.getAllTeachers);

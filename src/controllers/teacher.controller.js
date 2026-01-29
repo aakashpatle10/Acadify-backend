@@ -8,6 +8,7 @@ class TeacherController {
 
     register = async (req, res, next) => {
         try {
+            
             const teacher = await this.teacherService.registerTeacher(req.body);
 
             res.status(201).json({
@@ -25,6 +26,7 @@ class TeacherController {
             const { email, password } = req.body;
             const result = await this.teacherService.login(email, password);
 
+            
             res.cookie('token', result.token, {
                 httpOnly: true,
                 secure: true,
@@ -52,6 +54,10 @@ class TeacherController {
         try {
             const creatorId = req.userId;
             
+            
+            
+            
+
             const teacher = await this.teacherService.createTeacher(req.body, creatorId);
 
             res.status(201).json({

@@ -32,6 +32,7 @@ class TeacherService {
                 teacher.role
             );
 
+            
             if (redisClient.isOpen) {
                 try {
                     await redisClient.setEx(
@@ -66,6 +67,7 @@ class TeacherService {
 
     async registerTeacher(teacherData) {
         try {
+            
             const teacher = await this.teacherRepository.create(teacherData);
 
             return {
@@ -136,6 +138,7 @@ class TeacherService {
 
     async updateTeacher(id, updateData) {
         try {
+            
             delete updateData.password;
             delete updateData.role;
             delete updateData.email;
@@ -163,6 +166,7 @@ class TeacherService {
                 throw new AppError('Teacher not found', 404);
             }
 
+            
             if (redisClient.isOpen) {
                 await redisClient.del(`teacher_refresh_${id}`);
             }

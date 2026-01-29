@@ -4,6 +4,7 @@ const SECRET = process.env.JWT_SECRET;
 const DEFAULT_EXPIRES = "10s"; 
 
 if (!SECRET) {
+  
   console.warn("JWT_SECRET is not defined. Please set it in your .env");
 }
 

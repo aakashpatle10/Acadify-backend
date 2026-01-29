@@ -10,6 +10,7 @@ class StudentController {
 
     register = async (req, res, next) => {
         try {
+            
             const student = await this.studentService.registerStudent(req.body);
 
             res.status(201).json({
@@ -27,6 +28,7 @@ class StudentController {
             const { enrollmentNumber, password } = req.body;
             const result = await this.studentService.login(enrollmentNumber, password);
 
+            
             res.cookie('token', result.token, {
                 httpOnly: true,
                 secure: true,
@@ -59,6 +61,7 @@ class StudentController {
 
             const tokens = await this.studentService.refreshToken(refreshToken);
 
+            
             res.cookie('token', tokens.accessToken, {
                 httpOnly: true,
                 secure: true,
@@ -93,15 +96,18 @@ class StudentController {
                 const exp = decoded.exp * 1000;
                 const ttl = Math.floor((exp - Date.now()) / 1000);
 
+                
                 if (ttl > 0 && redisClient.isOpen) {
                     await redisClient.setEx(`bl_${token}`, ttl, 'blacklisted');
                 }
 
+                
                 if (redisClient.isOpen) {
                     await redisClient.del(`student_refresh_${decoded.userId}`);
                 }
             }
 
+            
             res.clearCookie('token', {
                 httpOnly: true,
                 secure: true,

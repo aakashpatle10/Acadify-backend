@@ -5,6 +5,7 @@ const timetableRepo = new MongoTimetableRepository();
 
 export class TimetableService {
   static async createTimetable(payload) {
+    
     return await timetableRepo.create(payload);
   }
 

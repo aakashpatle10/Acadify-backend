@@ -6,6 +6,7 @@ const generateQrSchema = Joi.object({
     "string.empty": "Timetable ID is required",
     "any.required": "Timetable ID is required",
   }),
+  
   expiresInSeconds: Joi.number().integer().min(5).max(120).messages({
     "number.base": "expiresInSeconds must be a number",
     "number.min": "expiresInSeconds must be at least 5 seconds",

@@ -5,13 +5,19 @@ import { authMiddleware, requireRole } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
+
+
 router.post(
   "/",
+  
+  
   createTimetableValidator,
   TimetableController.create
 );
 
+
 router.get("/teacher/:teacherId", TimetableController.getByTeacher);
+
 
 router.get(
   "/my",

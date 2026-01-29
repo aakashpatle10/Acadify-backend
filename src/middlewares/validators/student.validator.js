@@ -1,5 +1,7 @@
+
 import Joi from "joi";
 import { AppError } from "../../utils/errors.js";
+
 
 const loginSchema = Joi.object({
   enrollmentNumber: Joi.string().required().messages({
@@ -84,6 +86,7 @@ const createStudentSchema = Joi.object({
       "string.pattern.base": "Phone number must be 10 digits",
     }),
 
+  
   classSessionId: Joi.string().required().messages({
     "string.empty": "Class session is required",
     "any.required": "Class session is required",
