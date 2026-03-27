@@ -14,7 +14,7 @@ class JWTService {
         return jwt.sign(
             { userId, enrollmentNumber, roleId },
             config.JWT_SECRET,
-            { expiresIn: '7d' }
+            { expiresIn: '1d' }
         );
     }
 

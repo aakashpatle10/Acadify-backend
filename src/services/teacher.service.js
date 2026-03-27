@@ -37,7 +37,7 @@ class TeacherService {
                 try {
                     await redisClient.setEx(
                         `teacher_refresh_${teacher._id}`,
-                        7 * 24 * 60 * 60,
+                        24 * 60 * 60, // 1 day in seconds
                         tokens.refreshToken
                     );
                 } catch (redisError) {

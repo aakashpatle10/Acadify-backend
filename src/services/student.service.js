@@ -66,7 +66,7 @@ class StudentService {
         try {
           await redisClient.setEx(
             `student_refresh_${student._id}`,
-            7 * 24 * 60 * 60,
+            24 * 60 * 60, // 1 day in seconds
             tokens.refreshToken
           );
         } catch (redisError) {
@@ -132,7 +132,7 @@ class StudentService {
       if (redisClient.isOpen) {
         await redisClient.setEx(
           `student_refresh_${student._id}`,
-          7 * 24 * 60 * 60,
+          24 * 60 * 60, // 1 day in seconds
           tokens.refreshToken
         );
       }

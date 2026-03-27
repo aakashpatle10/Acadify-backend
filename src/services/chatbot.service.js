@@ -5,19 +5,24 @@ import config from "../config/environment.js";
 
 const studentRepo = new MongoStudentRepository();
 
-const groq = new Groq({
-    apiKey: config.KEY || config.GROK_API_KEY || process.env.KEY,
-});
+let groqInstance = null;
+const getGroqClient = () => {
+    if (!groqInstance) {
+        const apiKey = config.KEY || config.GROK_API_KEY || process.env.KEY || process.env.GROQ_API_KEY;
+        if (!apiKey) {
+            throw new Error("Groq API Key is missing! Please provide KEY, GROK_API_KEY, or GROQ_API_KEY in environment variables.");
+        }
+        groqInstance = new Groq({ apiKey });
+    }
+    return groqInstance;
+};
 
 export const chatService = async ({ message, student }) => {
+  const groq = getGroqClient();
 
   const studentData = await studentRepo.findStudentById(student.userId || student.id);
   
   const attendance = 75; 
-
-  if (!config.KEY && !config.GROK_API_KEY && !process.env.KEY) {
-      throw new Error("Groq API Key is missing in your .env file! Please add KEY=...");
-  }
 
   const prompt = buildStudentPrompt({
     name: studentData ? studentData.name : "Student",
