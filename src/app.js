@@ -9,6 +9,9 @@ import errorHandler from './middlewares/errorHandler.middleware.js';
 import { corsOptions } from './config/corsOptions.js'; 
 import qrRoutes from "./routes/qr.routes.js";
 import classSessionRoutes from "./routes/classSession.routes.js";
+import chatbotRoutes from "./routes/chatbot.routes.js";
+
+
 const app = express();
 
 app.use(cors(corsOptions));
@@ -22,6 +25,7 @@ app.use('/api/teacher', teacherRoutes);
 app.use('/api/timetable', timetableRoutes);
 app.use("/api/qr", qrRoutes);
 app.use("/api/classSession", classSessionRoutes);
+app.use("/api/chatbot", chatbotRoutes);
 
 
 app.use(errorHandler);
