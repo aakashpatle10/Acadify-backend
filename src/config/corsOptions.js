@@ -6,7 +6,7 @@ export const corsOptions = {
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
 
-        if (NODE_ENV === 'development') {
+        if (NODE_ENV === 'development' || NODE_ENV === 'production') {
             return callback(null, true);
         }
 
