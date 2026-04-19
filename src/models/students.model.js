@@ -56,9 +56,14 @@ const userSchema = new mongoose.Schema(
     },
     semester: {
       type: Number,
-      required: true,
+      require:true,
     },
+    section: {
 
+      type: String,
+      required:true,
+      trim: true,
+    },
     
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,

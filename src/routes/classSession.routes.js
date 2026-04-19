@@ -22,7 +22,7 @@ const router = express.Router();
 
 
 
-router.post("/", createClassSessionValidator, ClassSessionController.create);
+router.post("/", createClassSessionValidator,ClassSessionController.create);
 
 
 router.get("/", ClassSessionController.getAll);

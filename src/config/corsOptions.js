@@ -1,13 +1,16 @@
 import config from "./environment.js";
 
-const { ALLOWED_ORIGINS } = config;
+const { ALLOWED_ORIGINS, NODE_ENV } = config;
 
 export const corsOptions = {
     origin: (origin, callback) => {
-        
         if (!origin) return callback(null, true);
 
-        if (ALLOWED_ORIGINS.indexOf(origin) === -1) {
+        if (NODE_ENV === 'development') {
+            return callback(null, true);
+        }
+
+        if (!ALLOWED_ORIGINS.includes(origin)) {
             const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
             return callback(new Error(msg), false);
         }

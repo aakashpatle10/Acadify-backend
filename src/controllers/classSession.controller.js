@@ -1,33 +1,33 @@
-
 import { ClassSessionService } from "../services/classSession.service.js";
 
 export class ClassSessionController {
-  
+
   static async create(req, res, next) {
     try {
-      const result = await ClassSessionService.createClassSession(req.body);
+      const data = await ClassSessionService.create(req.body);
 
-      return res.status(201).json({
+      res.status(201).json({
         success: true,
-        message: "Class session created successfully",
-        data: result,
+        data
       });
+
     } catch (err) {
       next(err);
     }
   }
 
-  
   static async getAll(req, res, next) {
     try {
-      const sessions = await ClassSessionService.getAllClassSessions();
+      const data = await ClassSessionService.getAll();
 
-      return res.status(200).json({
+      res.status(200).json({
         success: true,
-        data: sessions,
+        data
       });
+
     } catch (err) {
       next(err);
     }
   }
+
 }

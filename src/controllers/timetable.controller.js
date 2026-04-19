@@ -36,13 +36,26 @@ export class TimetableController {
   
   static async getMyTimetables(req, res, next) {
     try {
-      const teacherId = req.user?.id; 
+      const teacherId = req.user?.id;
 
       if (!teacherId) {
         return next(new AppError("User not authenticated", 401));
       }
 
       const data = await TimetableService.getByTeacher(teacherId);
+
+      return res.status(200).json({
+        success: true,
+        data,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getTodayClasses(req, res, next) {
+    try {
+      const data = await TimetableService.getTodayClasses();
 
       return res.status(200).json({
         success: true,

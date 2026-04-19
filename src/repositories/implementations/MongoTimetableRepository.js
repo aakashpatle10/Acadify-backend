@@ -19,9 +19,17 @@ export class MongoTimetableRepository extends ITimetableRepository {
       .sort({ day: 1, startTime: 1 });
   }
 
+  async findByDay(day) {
+    return await Timetable.find({ day: day.toLowerCase() })
+      .populate("classSessionId")
+      .populate("teacherId", "firstName lastName email")
+      .sort({ startTime: 1 });
+  }
+
   async findById(id) {
     return await Timetable.findById(id)
       .populate("classSessionId")
       .populate("teacherId");
   }
+  
 }

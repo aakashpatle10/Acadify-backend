@@ -16,6 +16,11 @@ export class TimetableService {
     return await timetableRepo.findByTeacherId(teacherId);
   }
 
+  static async getTodayClasses() {
+    const dayName = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+    return await timetableRepo.findByDay(dayName);
+  }
+
   static async getByClassSession(classSessionId) {
     if (!classSessionId) {
       throw new AppError("ClassSession id is required", 400);
@@ -30,4 +35,5 @@ export class TimetableService {
     }
     return tt;
   }
+  
 }

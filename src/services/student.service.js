@@ -24,6 +24,7 @@ class StudentService {
         course: student.course,
         year: student.year,
         semester: student.semester,
+        section:student.section,
         classSessionId: student.classSessionId,
         role: 'student',
       };
@@ -87,6 +88,7 @@ class StudentService {
           course: student.course,
           year: student.year,
           semester: student.semester,
+          section:student.section,
           classSessionId: student.classSessionId,
           role: 'student', 
         },
@@ -215,6 +217,7 @@ class StudentService {
         course: student.course,
         year: student.year,
         semester: student.semester,
+        section:student.section,
         classSessionId: student.classSessionId,
       };
     } catch (error) {
@@ -239,6 +242,7 @@ class StudentService {
         course: student.course,
         year: student.year,
         semester: student.semester,
+        section:student.section,
         classSessionId: student.classSessionId,
       };
     } catch (error) {

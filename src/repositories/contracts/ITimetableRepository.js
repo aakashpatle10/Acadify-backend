@@ -14,4 +14,5 @@ export class ITimetableRepository {
   findById(id) {
     throw new Error("Method not implemented.");
   }
+  
 }

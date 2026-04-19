@@ -1,12 +1,10 @@
-
-
 import mongoose from "mongoose";
 
 const timetableSchema = new mongoose.Schema(
   {
     classSessionId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "ClassSession",          
+      ref: "ClassSession",
       required: true,
     },
     teacherId: {
@@ -20,17 +18,17 @@ const timetableSchema = new mongoose.Schema(
       trim: true,
     },
     day: {
-      type: String,                 
+      type: String,
       required: true,
       trim: true,
     },
     startTime: {
-      type: String,                 
+      type: String,
       required: true,
       trim: true,
     },
     endTime: {
-      type: String,                 
+      type: String,
       required: true,
       trim: true,
     },

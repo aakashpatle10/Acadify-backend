@@ -6,13 +6,28 @@ const createClassSessionSchema = Joi.object({
     "string.empty": "Class name is required",
     "any.required": "Class name is required",
   }),
+
   department: Joi.string().trim().optional(),
-  year: Joi.number().integer().min(1).max(6).optional(),
-  section: Joi.string().trim().optional(),
+
+  years: Joi.number().integer().min(1).required().messages({
+    "number.base": "Year must be a number",
+    "any.required": "Year is required",
+  }),
+
+  semester: Joi.number().integer().min(1).required().messages({
+    "number.base": "Semester must be a number",
+    "any.required": "Semester is required",
+  }),
+
+  section: Joi.string().trim().required().messages({
+    "string.empty": "Section is required",
+    "any.required": "Section is required",
+  }),
 });
 
 const validate = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body, { abortEarly: false });
+
   if (error) {
     return next(
       new AppError(
@@ -21,6 +36,7 @@ const validate = (schema) => (req, res, next) => {
       )
     );
   }
+
   next();
 };
 

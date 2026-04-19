@@ -18,6 +18,19 @@ router.post(
 
 router.get("/teacher/:teacherId", TimetableController.getByTeacher);
 
+router.get(
+  "/today",
+  authMiddleware,
+  TimetableController.getTodayClasses
+);
+
+
+router.get(
+  "/",
+  authMiddleware,
+  requireRole("teacher"),
+  TimetableController.getMyTimetables
+);
 
 router.get(
   "/my",

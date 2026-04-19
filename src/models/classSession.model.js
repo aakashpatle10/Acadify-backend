@@ -2,23 +2,28 @@ import mongoose from "mongoose";
 
 const classSessionSchema = new mongoose.Schema(
   {
-    name: {                
+    name: {
       type: String,
       required: true,
-      unique: true,
       trim: true,
     },
     department: {
       type: String,
       trim: true,
     },
-    year: {
-      type: Number,
+
+    years:{
+      type:Number,
+      trim:true,   
     },
-    section: {
-      type: String,
-      trim: true,
+    semester:{
+      type:Number,
+      trim:true,
     },
+    section:{
+      type:String,
+      trim:true,
+    }
   },
   { timestamps: true }
 );

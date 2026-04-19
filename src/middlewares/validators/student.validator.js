@@ -91,6 +91,11 @@ const createStudentSchema = Joi.object({
     "string.empty": "Class session is required",
     "any.required": "Class session is required",
   }),
+
+  section: Joi.string().required().trim().messages({
+    "string.empty": "Section is required",
+    "any.required": "Section is required",
+  }),
 });
 
 const validate =
