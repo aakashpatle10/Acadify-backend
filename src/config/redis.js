@@ -30,11 +30,15 @@ client.on("connect", () => {
 });
 
 export async function connectRedis() {
+  if (!REDIS_HOST) {
+    logger.warn("⚠️ Redis host not provided. Skipping Redis connection. Some features may not work.");
+    return;
+  }
+
   try {
     await client.connect();
   } catch (error) {
-    logger.error("Failed to connect to Redis:", error);
-    process.exit(1);
+    logger.error("❌ Failed to connect to Redis. Continuing without Redis:", error.message);
   }
 }
 
