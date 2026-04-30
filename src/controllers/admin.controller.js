@@ -40,7 +40,7 @@ class AdminController {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 24 * 60 * 60 * 1000 // 1 day
+                maxAge: 24 * 60 * 60 * 1000 
             });
 
             res.status(200).json({
@@ -73,7 +73,7 @@ class AdminController {
                 httpOnly: true,
                 secure: true,
                 sameSite: 'none',
-                maxAge: 24 * 60 * 60 * 1000 // 1 day
+                maxAge: 24 * 60 * 60 * 1000 
             });
 
             res.status(200).json({

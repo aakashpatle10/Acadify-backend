@@ -7,7 +7,6 @@ export class ClassSessionService {
 
   static async create(payload) {
 
-    // optional duplicate check (same class + sem + section)
     const existing = await repo.findAll();
 
     const alreadyExists = existing.some(

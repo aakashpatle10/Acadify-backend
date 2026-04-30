@@ -61,7 +61,7 @@ class AdminService {
                 try {
                     await redisClient.setEx(
                         `admin_refresh_${admin._id}`,
-                        24 * 60 * 60, // 1 day in seconds
+                        24 * 60 * 60, 
                         tokens.refreshToken
                     );
                 } catch (redisError) {
@@ -119,7 +119,7 @@ class AdminService {
             if (redisClient.isOpen) {
                 await redisClient.setEx(
                     `admin_refresh_${admin._id}`,
-                    24 * 60 * 60, // 1 day in seconds
+                    24 * 60 * 60, 
                     tokens.refreshToken
                 );
             }

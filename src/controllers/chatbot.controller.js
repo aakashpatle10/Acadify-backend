@@ -2,7 +2,7 @@ import { chatService } from "../services/chatbot.service.js";
 
 export const chatController = async (req, res, next) => {
   try {
-    const student = req.user; // JWT se aata hai
+    const student = req.user; 
     const { message } = req.body;
 
     const reply = await chatService({
@@ -16,6 +16,6 @@ export const chatController = async (req, res, next) => {
     });
 
   } catch (error) {
-    next(error); // AppError middleware handle karega
+    next(error); 
   }
 };
